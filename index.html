@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator with History</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen flex-col">
+
+  <div class="bg-white p-6 rounded-lg shadow-lg w-72">
+    <!-- Display -->
+    <input 
+      type="text" 
+      id="display" 
+      class="w-full text-right text-2xl p-4 bg-gray-200 text-black rounded mb-4" 
+      placeholder="0" 
+      disabled 
+    />
+
+    <!-- Calculator Buttons -->
+    <div class="grid grid-cols-4 gap-2">
+      <!-- Row 1: Clear, Delete, Division, Multiply -->
+      <button class="btn bg-white text-black border border-black" onclick="clearDisplay()">C</button>
+      <button class="btn bg-white text-black border border-black" onclick="deleteLast()">←</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendOperator('/')">÷</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendOperator('*')">×</button>
+
+      <!-- Row 2: 7, 8, 9, Subtract -->
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(7)">7</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(8)">8</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(9)">9</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendOperator('-')">−</button>
+
+      <!-- Row 3: 4, 5, 6, Add -->
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(4)">4</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(5)">5</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(6)">6</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendOperator('+')">+</button>
+
+      <!-- Row 4: 1, 2, 3, Equals -->
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(1)">1</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(2)">2</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendNumber(3)">3</button>
+      <button class="btn bg-white text-black border border-black row-span-2" onclick="evaluateResult()">=</button>
+
+      <!-- Row 5: 0 (Left), Decimal -->
+      <button class="btn bg-white text-black border border-black col-span-2" onclick="appendNumber(0)">0</button>
+      <button class="btn bg-white text-black border border-black" onclick="appendOperator('.')">.</button>
+    </div>
+  </div>
+
+  <!-- History Section -->
+  <div class="mt-8 w-72">
+    <h2 class="text-center text-xl font-semibold mb-4 text-black">History</h2>
+    <ul id="history-list" class="space-y-2"></ul>
+    <button 
+      class="mt-4 bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 w-full" 
+      onclick="clearHistory()">Clear History
+    </button>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const historyList = document.getElementById('history-list');
+
+    // Load history from localStorage on page load
+    window.onload = loadHistory;
+
+    function appendNumber(number) {
+      display.value += number;
+    }
+
+    function appendOperator(operator) {
+      if (display.value === '') return;
+      display.value += operator;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function evaluateResult() {
+      try {
+        const result = eval(display.value);
+        if (!isNaN(result)) {
+          addToHistory(`${display.value} = ${result}`);
+          display.value = result;
+        }
+      } catch {
+        display.value = 'Error';
+      }
+    }
+
+    function addToHistory(entry) {
+      let history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+      history.push(entry);
+      localStorage.setItem('calcHistory', JSON.stringify(history));
+      renderHistory();
+    }
+
+    function loadHistory() {
+      let history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+      renderHistory(history);
+    }
+
+    function renderHistory(history = JSON.parse(localStorage.getItem('calcHistory')) || []) {
+      historyList.innerHTML = '';
+      history.forEach(entry => {
+        const li = document.createElement('li');
+        li.textContent = entry;
+        li.className = 'bg-white text-black p-2 rounded shadow';
+        historyList.appendChild(li);
+      });
+    }
+
+    function clearHistory() {
+      localStorage.removeItem('calcHistory');  // Clear localStorage
+      renderHistory([]);  // Clear the history list
+    }
+  </script>
+
+</body>
+</html>
