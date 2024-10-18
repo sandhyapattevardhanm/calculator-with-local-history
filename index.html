@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXrwv6pV4fQvFkEiwAdhb2HP+EwSXLKmN7aUAXbIo5tKsv0K+N4ztTlFg5KnQ+Rymp/7pCJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Calculator with History</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 flex items-center justify-center min-h-screen flex-col">
+
+  <!-- Main Heading -->
+  <h1 class="text-4xl font-extrabold text-white mb-6">Calculator <i class="fa-solid fa-calculator color-white"></i></h1>
 
   <div class="bg-white p-6 rounded-2xl shadow-2xl w-72">
     <!-- Display -->
@@ -84,7 +88,7 @@
         const result = eval(display.value);
         if (!isNaN(result)) {
           addToHistory(`${display.value} = ${result}`);
-          display.value = result;
+          display.value = ''; // Auto-clear display after calculation
         }
       } catch {
         display.value = 'Error';
@@ -114,8 +118,8 @@
     }
 
     function clearHistory() {
-      localStorage.removeItem('calcHistory');  // Clear localStorage
-      renderHistory([]);  // Clear the history list
+      localStorage.removeItem('calcHistory'); // Clear localStorage
+      renderHistory([]); // Clear the history list
     }
   </script>
 
