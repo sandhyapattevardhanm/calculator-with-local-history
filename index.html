@@ -6,56 +6,51 @@
   <title>Calculator with History</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen flex-col">
+<body class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 flex items-center justify-center min-h-screen flex-col">
 
-  <div class="bg-white p-6 rounded-lg shadow-lg w-72">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-72">
     <!-- Display -->
     <input 
       type="text" 
       id="display" 
-      class="w-full text-right text-2xl p-4 bg-gray-200 text-black rounded mb-4" 
+      class="w-full text-right text-2xl p-4 bg-gray-100 text-gray-800 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-300" 
       placeholder="0" 
       disabled 
     />
 
     <!-- Calculator Buttons -->
-    <div class="grid grid-cols-4 gap-2">
-      <!-- Row 1: Clear, Delete, Division, Multiply -->
-      <button class="btn bg-white text-black border border-black" onclick="clearDisplay()">C</button>
-      <button class="btn bg-white text-black border border-black" onclick="deleteLast()">←</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendOperator('/')">÷</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendOperator('*')">×</button>
+    <div class="grid grid-cols-4 gap-3">
+      <button class="btn bg-red-400 hover:bg-red-500 text-white font-semibold py-2 rounded-lg" onclick="clearDisplay()">C</button>
+      <button class="btn bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 rounded-lg" onclick="deleteLast()">←</button>
+      <button class="btn bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg" onclick="appendOperator('/')">÷</button>
+      <button class="btn bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg" onclick="appendOperator('*')">×</button>
 
-      <!-- Row 2: 7, 8, 9, Subtract -->
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(7)">7</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(8)">8</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(9)">9</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendOperator('-')">−</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(7)">7</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(8)">8</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(9)">9</button>
+      <button class="btn bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg" onclick="appendOperator('-')">−</button>
 
-      <!-- Row 3: 4, 5, 6, Add -->
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(4)">4</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(5)">5</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(6)">6</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendOperator('+')">+</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(4)">4</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(5)">5</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(6)">6</button>
+      <button class="btn bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg" onclick="appendOperator('+')">+</button>
 
-      <!-- Row 4: 1, 2, 3, Equals -->
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(1)">1</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(2)">2</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendNumber(3)">3</button>
-      <button class="btn bg-white text-black border border-black row-span-2" onclick="evaluateResult()">=</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(1)">1</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(2)">2</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg" onclick="appendNumber(3)">3</button>
+      <button class="btn bg-green-400 hover:bg-green-500 text-white font-semibold py-2 rounded-lg row-span-2" onclick="evaluateResult()">=</button>
 
-      <!-- Row 5: 0 (Left), Decimal -->
-      <button class="btn bg-white text-black border border-black col-span-2" onclick="appendNumber(0)">0</button>
-      <button class="btn bg-white text-black border border-black" onclick="appendOperator('.')">.</button>
+      <button class="btn bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg col-span-2" onclick="appendNumber(0)">0</button>
+      <button class="btn bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg" onclick="appendOperator('.')">.</button>
     </div>
   </div>
 
   <!-- History Section -->
   <div class="mt-8 w-72">
-    <h2 class="text-center text-xl font-semibold mb-4 text-black">History</h2>
+    <h2 class="text-center text-xl font-bold mb-4 text-white">History</h2>
     <ul id="history-list" class="space-y-2"></ul>
     <button 
-      class="mt-4 bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600 w-full" 
+      class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600 w-full font-semibold" 
       onclick="clearHistory()">Clear History
     </button>
   </div>
@@ -113,7 +108,7 @@
       history.forEach(entry => {
         const li = document.createElement('li');
         li.textContent = entry;
-        li.className = 'bg-white text-black p-2 rounded shadow';
+        li.className = 'bg-white text-black p-2 rounded-lg shadow';
         historyList.appendChild(li);
       });
     }
